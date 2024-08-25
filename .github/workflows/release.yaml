@@ -1,28 +1,33 @@
 name: release
 
 on:
-  release:
-    types:
-      - published
+    release:
+      types: [published]
 
 env:
-  DOCKER_BASE_NAME: ghcr.io/mei-summary
+    DOCKER_BASE_NAME: ghcr.io/mei-summary
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64
     permissions:
       contents: read
       packages: write
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push

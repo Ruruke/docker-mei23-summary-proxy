@@ -1,6 +1,6 @@
 services:
   mei-summary:
-    image: mei-summary:latest
+    image: ghcr.io/chan-mai/docker-mei23-summary-proxy/mei-summary:latest
     container_name: "mei-summary"
     hostname: "mei-summary"
     restart: always
