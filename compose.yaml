@@ -1,0 +1,9 @@
+services:
+  mei-summary:
+    build: .
+    restart: always
+    container_name: "mei-summary"
+    hostname: "mei-summary"
+    ports: 
+      - '3030:3030'
+    tty: true
