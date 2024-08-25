@@ -1,0 +1,28 @@
+services:
+  mei-summary:
+    image: mei-summary:latest
+    container_name: "mei-summary"
+    hostname: "mei-summary"
+    restart: always
+
+  proxy:
+    image: nginx
+    container_name: "proxy"
+    restart: always
+    # If you do not use Cloudflare Tunnel, uncomment here.
+    #ports:
+    #  - "80:80"
+    volumes:
+      - ./proxy.conf:/etc/nginx/conf.d/default.conf:ro
+
+  # You may comment out the entire service if you do not need it.
+  tunnel:
+    image: cloudflare/cloudflared
+    restart: always
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+    environment:
+      # Obtain a Tunnel token from Cloudflare's Zero Trust page and include it here.
+      - TUNNEL_TOKEN=
